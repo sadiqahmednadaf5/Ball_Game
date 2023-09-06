@@ -4,8 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .container{
+          
+            height: 100vh;
+            border: 3px solid black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+
+        }
+        .game{
+            height:600px;
+            width: 600px;
+            border: 2px solid black;
+            
+            
+        }
+        .ball{
+            width: 200px;
+            height:200px;
+            border-radius: 50%;
+            background-color: yellow;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello Word</h1>
+    <div class="container">
+        <div class="game">
+
+        </div>
+    </div>
+    <script>
+        window.onload = function(){
+            let ball=document.createElement("div")
+            ball.classList.add("ball")
+            let gameBox = document.querySelector(".game")
+            gameBox.appendChild(ball)
+        }
+    </script>
 </body>
 </html>
