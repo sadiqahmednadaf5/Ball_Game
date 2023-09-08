@@ -55,63 +55,120 @@
         </div>
     </div>
     <script>
-        window.onload = function(){
-            let ball=document.createElement("div")
-            ball.classList.add("ball")
-            let gameBox = document.querySelector(".game")
-            gameBox.appendChild(ball)
+        window.onload=function(){
+        let ball= document.createElement("div")
+        ball.classList.add("ball")
+        let gameBox=document.querySelector(".game")
+        // gameBox.appendChild(ball)
+
+        const config={1:{
+        grid: "one",
+        circles:4
+    },
+    2:{
+            grid:"two",
+            circles:9
+        }
+    }
+
+    let player={
+        name:"sadiq",
+        level:2
+    }
+    console.log(player.level,config[player.level])
+
+    function getGridClassName(p,config){
+        return "grid-"+config[p.level].grid
+    }
+    console.log(getGridClassName(player,config))
+
+    let className=getGridClassName(player,config)
+    gameBox.classList.add(className)
+
+    function getBalls(p,config)
+    {
+        let balls=[]
+        let numCircles=config[p.level].circles
+        for(let i=0;i<numCircles;i++)
+        {
+           
+        //    let ball=document.createElement("div")
+        //    ball.classList.add("ball")
+           balls.push(getBall()) 
+           
+        }
+        return balls
         
-        const config = { 
-            1:{
-            grid : "one",
-            circle : 5
+    }
+
+    function getBall()
+    {
+        let ball=document.createElement("div")
+        ball.classList.add("ball")
+        return{
+            color:"yellow",
+            obj:ball,
+            toggle(){
+                this.obj.style.backgroundColor=this.color
+            }
+        };
+    }
+
+   
+
+   let game={
+        running:false,
+        start(){
+            this.balls=getBalls(player,config)
+            // this.balls.forEach(ball=>gameBox.appendChild(ball))
+            this.balls.forEach(ball=>{ball.toggle()
+            gameBox.appendChild(ball.obj)})
+            this.running=true
+            // this.update()
         },
-        2:{ 
-            grid : "two",
-            circle : 9
-        }
-    
-        }
-    
-        let player = {
-            name : "sadiq",
-            level : 1
-        }
-        console.log(player.level,config[player.level])
-        
-        function getGridClassName(p,config){
-            return "grid-"  +config[p.level].grid
-        }
-        console.log(getGridClassName(player,config))   
-        
-        let className = getGridClassName(player,config)
-        gameBox.classList.add(className)
 
-        function getBalls(p,config){
-            let balls = []
-            let numcircles = config[p.level].circle
-            for (let i=0; i<numcircles; i++){
+         update(){
+            const ball = getRandomBall(this.balls)
+            this.balls.map(b=>{b.color = "yellow"
+            return b 
+    })
+             ball.color = "red"
+            this.balls.map(b=>b.toggle())
+            
+        }
+        
+  
+    }
+          
+    function getRandomBall(balls){
+        let i = Math.ceil(Math.random()*100)%balls.length
+        return balls[i]
+    }
+    gameBox.onclick = function(e){
+        let clickedBall = game.balls.filter(b=>b.obj==e.target ) [0]
 
-                let ball = document.createElement("div")
-                ball.classList.add("ball")
-                balls.push(ball)
+            if(clickedBall){
+                if(clickedBall.color == "red")
+                alert("caught")
+            else
+            alert("wrong")
+            
             }
-            return balls
-        }
+    }
 
-            let game = {
-                running : false,
-                start(){
-                    this.balls = getBalls(player,config)
-                    this.balls.forEach(ball =>gameBox.appendChild(ball))
-                    this.running = true  
-                   
-                }
-            }
-              
-            game.start();
-        
+
+    game.start()
+   setInterval(()=>game.update(),100)
+
+    game.balls[1].color="red"
+    game.balls[1].toggle()
+
+
     };
+
+   
+        
+  
 
     </script>
 
